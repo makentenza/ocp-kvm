@@ -1,7 +1,5 @@
 ---
 
 - name: Manually add OCP Nodes to /etc/hosts
-  hosts: all
-
   roles:
     - hosts
