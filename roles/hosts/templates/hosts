@@ -4,3 +4,4 @@
 192.168.122.23	atomic03.mak.local
 192.168.122.24	atomic04.mak.local
 192.168.122.25	atomic05.mak.local
+192.168.122.10	nfs.mak.local dns.mak.local
