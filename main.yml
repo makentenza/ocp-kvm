@@ -3,3 +3,8 @@
 - name: Manually add OCP Nodes to /etc/hosts
   roles:
     - hosts
+
+- name: Susbcribe to RHEL 7 Server and OSE 3.2 repositories
+  roles:
+    - repositories
+    
