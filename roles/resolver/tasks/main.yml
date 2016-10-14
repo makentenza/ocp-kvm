@@ -1,0 +1,4 @@
+---
+- name: Configure /etc/hosts file
+  template: src=resolv.conf dest=/etc/resolv.conf
+  tags: hosts
