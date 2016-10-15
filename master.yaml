@@ -1,0 +1,16 @@
+---
+
+- name: Manually add OCP Nodes to /etc/hosts
+  hosts: all
+  roles:
+    - hosts
+
+- name: Manually add KVM Hypervisor as GW
+  hosts: all
+  roles:
+    - resolver
+
+- name: Susbcribe to RHEL 7 Server and OSE 3.2 repositories
+  hosts: all
+  roles:
+    - repositories

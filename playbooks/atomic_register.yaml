@@ -1,0 +1,9 @@
+---
+
+# Register, auto-subscribe, attach to the SKU pool and add required repos
+  - name: Check system is correcty registered with Red Hat and attach
+    redhat_subscription: state=present
+                         username={{sub_username}}
+                         password={{sub_password}}
+                         autosubscribe=true
+                         pool={{pool_id}}
