@@ -1,9 +1,6 @@
 ---
 
 # Add OSE 3.2 required repositories
-- name: Remove all repos
-  command: subscription-manager repos --disable="*"
-
 - name: Add RHEL 7 base and OSE 3.2 repos
   command: subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.2-rpms"
 
