@@ -1,4 +1,0 @@
----
-- name: Configure /etc/hosts file
-  template: src=hosts dest=/etc/hosts
-  tags: hosts
