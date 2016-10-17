@@ -1,0 +1,74 @@
+
+openshift_hosted_registry_storage_host=ocp01.mak.local
+openshift_hosted_registry_storage_nfs_directory=/nfs
+
+## Project Defaults
+openshift_master_default_subdomain=apps.mak.local
+osm_default_node_selector="purpose=work"
+
+# override the default controller lease ttl
+#osm_controller_lease_ttl=30
+[OSEv3:children]
+masters
+nodes
+etcd
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+ansible_ssh_user=cloud-user
+ansible_sudo=true
+
+deployment_type=openshift-enterprise
+
+# Simple HTPASSWD authentication, for production environments connecting to AD would be recommended
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+# Native high availbility cluster method with optional load balancer.
+# If no lb group is defined installer assumes that a load balancer has
+# been preconfigured. For installation the value of
+# openshift_master_cluster_hostname must resolve to the load balancer
+# or to one or all of the masters defined in the inventory if no load
+# balancer is present.
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname=ocpcluster01.mak.local
+openshift_master_cluster_public_hostname=ocpcluster01.mak.local
+
+#openshift_master_api_port=443
+#openshift_master_console_port=443
+
+## Infrastructure
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+
+openshift_master_metrics_public_url=https://metrics01.mak.local/hawkular/metrics
+openshift_master_logging_public_url=https://logging01.mak.local
+
+## ROUTER
+openshift_router_selector="target=router"
+openshift_hosted_router_selector="target=router"
+openshift_hosted_router_replicas=2
+
+## REGISTRY
+openshift_registry_selector="purpose=infra"
+openshift_hosted_registry_replicas=1
+openshift_hosted_registry_storage_kind=nfs
+
+# host group for masters
+[masters]
+ocp01.mak.local
+ocp02.mak.local
+ocp03.mak.local
+
+
+# host group for etcd
+[etcd]
+ocp01.mak.local
+ocp02.mak.local
+ocp03.mak.local
+
+# host group for nodes, includes region info
+[nodes]
+ocp01.mak.local openshift_hostname=ocp01.mak.local openshift_node_labels="{'region': 'primary', 'zone': 'left','target':'rsvd','purpose':'infra'}" openshift_schedulable=false
+ocp02.mak.local openshift_hostname=ocp02.mak.local openshift_node_labels="{'region': 'primary', 'zone': 'left','target':'rsvd','purpose':'infra'}" openshift_schedulable=true
+ocp03.mak.local openshift_hostname=ocp03.mak.local openshift_node_labels="{'region': 'primary', 'zone': 'left','target':'rsvd','purpose':'infra'}" openshift_schedulable=true
+ocp04.mak.local openshift_hostname=ocp04.mak.local openshift_node_labels="{'region': 'primary', 'zone': 'right','target':'rsvd','purpose':'work'}" openshift_schedulable=true
+ocp05.mak.local openshift_hostname=ocp05.mak.local openshift_node_labels="{'region': 'primary', 'zone': 'right','target':'rsvd','purpose':'work'}" openshift_schedulable=true
